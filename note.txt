@@ -1,0 +1,9 @@
+tinker
+
+php artisan tinker 
+App\Models\Category::all();
+
+App\Models\Category::create(['name' => "Web Development"]);
+
+php artisan make:trait (TraitName)
+eg: php artisan make:trait Traits/SuccessResponse
