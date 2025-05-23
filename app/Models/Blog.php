@@ -9,6 +9,7 @@ class Blog extends Model
     protected $table = "blogs";
     protected $primaryKey = "id";
     protected $fillable = [
+        "category_id",
         'title',
         'body', 
     ];

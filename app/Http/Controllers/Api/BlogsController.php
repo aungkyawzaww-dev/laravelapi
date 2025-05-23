@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use App\Traits\HttpResponseTrait;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class BlogsController extends Controller
         //     "data"=>$blogs
         // ],200);
 
-        return $this->successResponse("Successfully retrieved",$blogs);
+
+        return $this->successResponse("Successfully show",BlogResource::collection($blogs));
     }
 
 
@@ -37,12 +39,13 @@ class BlogsController extends Controller
         //     "status"=>"passes",
         //     "data"=>$searchblogs
         // ],200);
-        return $this->successResponse("Successfully retrieved",$searchblogs,200);
+        return $this->successResponse("Successfully searched",$searchblogs,200);
     }
 
     public function store(Request $request){
 
         $validator = Validator::make($request->all(),[
+            "category_id"=>"required",
             "title"=>"required",
             "body"=>"required"
         ]);
@@ -58,6 +61,7 @@ class BlogsController extends Controller
         }
 
         $blog = Blog::create([
+            "category_id"=> $request->category_id,
             "title"=> $request->title,
             "body"=> $request->body
         ]);
@@ -78,6 +82,7 @@ class BlogsController extends Controller
     public function update(Request $request, $id){
 
         $validator = Validator::make($request->all(),[
+            "category_id"=>"required",
             "title"=>"required",
             "body"=>"required"
         ]);
@@ -89,6 +94,7 @@ class BlogsController extends Controller
         }
 
         $blog->update([
+            "category_id"=> $request->category_id,
             "title"=> $request->title,
             "body"=> $request->body
         ]);

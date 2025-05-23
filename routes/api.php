@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get("/blogs",[BlogsController::class,"index"]);
 Route::get("/blogs/search",[BlogsController::class,"search"]);
 Route::get("/blogs/{id}",[BlogsController::class,"show"]);
-Route::post("/blogs/create",[BlogsController::class,"store"]);
+Route::post("/blogs",[BlogsController::class,"store"]);
 Route::put("/blogs/{id}",[BlogsController::class,"update"]);
 Route::delete("/blogs/{id}",[BlogsController::class,"destroy"]);
 

@@ -1,9 +1,14 @@
-tinker
+=> tinker
 
 php artisan tinker 
 App\Models\Category::all();
 
 App\Models\Category::create(['name' => "Web Development"]);
 
+=> Trait 
 php artisan make:trait (TraitName)
 eg: php artisan make:trait Traits/SuccessResponse
+
+
+=>Refresh migrate 
+php artisan migrate:refresh --path=database/migrations/2025_05_10_173527_create_blogs_table.php
