@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Traits\HttpResponseTrait;
 use Illuminate\Http\Request;
@@ -14,10 +15,11 @@ class CategoriesController extends Controller
     use HttpResponseTrait;
     public function index(Request $request){
 
-        $categories = Category::when($request->q, function($catetory) use($request){
-            $catetory->where('name',"like","%$request->q%");
-        })->get();
-        
+        $categories = CategoryResource::collection(
+            Category::when($request->q, function($catetory) use($request){
+                $catetory->where('name',"like","%$request->q%");
+            })->get()
+        );
 
         return $this->successResponse("Successfully retrieved",$categories);
     }
@@ -49,8 +51,10 @@ class CategoriesController extends Controller
     }
 
     public function show($id){
-        $catgories = Category::findOrFail($id);
-        return $catgories;
+        $catgories = new CategoryResource(Category::findOrFail($id));
+        $categoriesRes =  $catgories->blogs;
+        // return $this->successResponse("Successfully",$categoriesRes);
+        return $this->successResponse("Successfully retrieved",$categoriesRes,200);
     }
 
     public function update(Request $request, $id){

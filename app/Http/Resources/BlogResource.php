@@ -23,7 +23,10 @@ class BlogResource extends JsonResource
             "body" => $this->body,
             "created_at" => $this->created_at->format("d m Y"),
             "updated_at"=> $this->updated_at->format("d m Y"),
-            "category" => Category::where("id",$this->category_id)->select('id',"name")->first()
+            // "category" => Category::where("id",$this->category_id)->select('id',"name")->first()
+            "relations" => [
+                "categroy" => $this->category::where("id",$this->category_id)->select('id',"name")->first(),
+            ]
         ];
     }
 }

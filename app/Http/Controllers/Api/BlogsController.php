@@ -7,16 +7,25 @@ use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use App\Traits\HttpResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Validator;
+
 
 class BlogsController extends Controller
 {
     use HttpResponseTrait;
     public function index(Request $request){
         // $blogs = Blog::all();
-        $blogs = Blog::when($request->q, function($blog) use($request){
-            $blog->where('title',"like","%$request->q%");
-        })->get();
+        // $blogs = Blog::when($request->q, function($blog) use($request){
+        //     $blog->where('title',"like","%$request->q%");
+        // })->get();
+
+
+        $blogs = BlogResource::collection(
+            Blog::when($request->q, function($blog) use($request){
+                $blog->where('title',"like","%$request->q%");
+            })->paginate(3)
+        );
 
         // return response()->json([
         //     "message"=> "success",
@@ -25,7 +34,11 @@ class BlogsController extends Controller
         // ],200);
 
 
-        return $this->successResponse("Successfully show",BlogResource::collection($blogs));
+        // return $blogs;
+        return $this->successResponse("Success",$blogs);
+        // return $this->successResponse("Successfully show",BlogResource::collection($blogs));
+        
+
     }
 
 
@@ -76,7 +89,7 @@ class BlogsController extends Controller
 
     public function show($id){
         $blogs = Blog::findOrFail($id);
-        return $blogs;
+        return $blogs->category;
     }
 
     public function update(Request $request, $id){
