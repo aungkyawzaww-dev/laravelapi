@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthContrller;
 use App\Http\Controllers\Api\BlogsController;
 use App\Http\Controllers\Api\CategoriesController;
 use Illuminate\Http\Request;
@@ -8,6 +9,13 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
+
+
+// Authentication
+Route::post("/register",[AuthContrller::class,"register"]);
+Route::post("/login",[AuthContrller::class,"login"]);
+Route::post("/logout",[AuthContrller::class,"logout"]);
+
 
 Route::get("/blogs",[BlogsController::class,"index"]);
 Route::get("/blogs/search",[BlogsController::class,"search"]);

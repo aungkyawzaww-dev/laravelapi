@@ -31,7 +31,7 @@ trait HttpResponseTrait
         return response()->json([
             "message"=> $message,
             "status"=>"passes",
-            "data"=>$data->response()->getdata()
+            "data"=>$data
         ],$statuscode);
     }
 
