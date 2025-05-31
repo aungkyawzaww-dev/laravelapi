@@ -73,17 +73,24 @@ class BlogsController extends Controller
             return $this->errorResponse("Validator fails",$validator->messages());
         }
 
-        $blog = Blog::create([
-            "category_id"=> $request->category_id,
-            "title"=> $request->title,
-            "body"=> $request->body
-        ]);
+        //method 1
+        // $blog = Blog::create([
+        //     "category_id"=> $request->category_id,
+        //     "title"=> $request->title,
+        //     "body"=> $request->body
+        // ]);
 
+        // method 2
+        $blog = Blog::create($validator->validated());
+
+        // method 1
         // return response()->json([
         //     "message"=> "Successfully created",
         //     "status"=> "passes",
         //     "data"=>$blog
         // ],201);
+
+        // method 2
         return $this->successResponse("Successfully created",$blog,201);
     }
 

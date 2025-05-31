@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AuthContrller;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BlogsController;
 use App\Http\Controllers\Api\CategoriesController;
 use Illuminate\Http\Request;
@@ -12,17 +12,26 @@ use Illuminate\Support\Facades\Route;
 
 
 // Authentication
-Route::post("/register",[AuthContrller::class,"register"]);
-Route::post("/login",[AuthContrller::class,"login"]);
-Route::post("/logout",[AuthContrller::class,"logout"]);
+Route::post("/register",[AuthController::class,"register"]);
+Route::post("/login",[AuthController::class,"login"]);
 
 
-Route::get("/blogs",[BlogsController::class,"index"]);
-Route::get("/blogs/search",[BlogsController::class,"search"]);
-Route::get("/blogs/{id}",[BlogsController::class,"show"]);
-Route::post("/blogs",[BlogsController::class,"store"]);
-Route::put("/blogs/{id}",[BlogsController::class,"update"]);
-Route::delete("/blogs/{id}",[BlogsController::class,"destroy"]);
+Route::middleware('auth:sanctum')->group(function(){
+    
+    Route::post("/logout",[AuthController::class,"logout"]);
 
 
-Route::apiResource("/categories", CategoriesController::class);
+    Route::get("/blogs",[BlogsController::class,"index"]);
+    Route::get("/blogs/search",[BlogsController::class,"search"]);
+    Route::get("/blogs/{id}",[BlogsController::class,"show"]);
+    Route::post("/blogs",[BlogsController::class,"store"]);
+    Route::put("/blogs/{id}",[BlogsController::class,"update"]);
+    Route::delete("/blogs/{id}",[BlogsController::class,"destroy"]);
+
+    Route::apiResource("/categories", CategoriesController::class);
+
+
+});
+
+
+

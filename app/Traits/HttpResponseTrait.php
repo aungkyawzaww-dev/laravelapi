@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 trait HttpResponseTrait
@@ -9,7 +10,7 @@ trait HttpResponseTrait
 
     public function successResponse($message,$data,$statuscode = 200){
 
-        if($data->resource instanceof LengthAwarePaginator){
+        if($data instanceof JsonResource && $data->resource instanceof LengthAwarePaginator){
             $data = $data->response()->getdata();
         }
 
@@ -30,7 +31,7 @@ trait HttpResponseTrait
     public function errorResponse($message,$data,$statuscode = 500){
         return response()->json([
             "message"=> $message,
-            "status"=>"passes",
+            "status"=>"fail",
             "data"=>$data
         ],$statuscode);
     }

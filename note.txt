@@ -14,5 +14,6 @@ eg: php artisan make:trait Traits/SuccessResponse
 php artisan migrate:refresh --path=database/migrations/2025_05_10_173527_create_blogs_table.php
 
 
+
 => Authentication using Sanctum
 
